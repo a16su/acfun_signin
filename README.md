@@ -10,7 +10,10 @@
     - `python run.py uodate -u you_new_username`指定新的账号，接下来根据提速输入新的密码
 
 ## 运行方法
-- `cd acfun`
+须得安装 `pipenv`模块
+- `cd acfun_signin`
+- `pipenv install` 创建虚拟环境
+- `pipenv shell` 激活虚拟环境
 - `python run.py init -u your_username` 先初始化账号密码
     - `python run.py run --pc/--mobile` 开始签到
 - 或者直接 `python run.py run --pc/--mobile`在程序运行过程中根据提示输入账号密码

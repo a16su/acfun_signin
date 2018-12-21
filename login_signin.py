@@ -71,8 +71,7 @@ class AcLogin:
         self._pc_session.cookies.set('stochastic', certified)  # 签到用的cookie需要有验证参数
         signin_url = f'http://www.acfun.cn/nd/pst?locationPath=signin&certified={certified}&channel=0&data={ctime}'  # 网页端签到网址
         response = self._pc_session.post(signin_url)
-        print(response)
-        print(response.json()['data']['msg'], response.status_code)
+        print(response.json())
 
     def mlogin(self):
         """
@@ -85,7 +84,8 @@ class AcLogin:
         response = self._m_session.post(self.mlogin_url, data=data)
         if response.status_code == 200 and response.json()['vdata']['token']:
             token = response.json()['vdata']['token']
-            self.update_sqlite(access_token=token, mobile_cookie=self._m_session.cookies.get_dict())  # 登陆后更新token和cookie
+            self.update_sqlite(access_token=token,
+                               mobile_cookie=self._m_session.cookies.get_dict())  # 登陆后更新token和cookie
             return token
         else:
             print('登录失败')
@@ -134,7 +134,7 @@ class AcLogin:
         :type: kwargs: dict
         :return: None
         """
-        if 'username' in kwargs and not init:  # 如果参数是账号和密码则改为插入数据
+        if 'username' in kwargs and init:  # 如果参数是账号和密码则改为插入数据
             key = ','.join(kwargs.keys())
             value = ','.join([f'"{i}"' for i in kwargs.values()])
             sql_str = f'insert into user_data({key}) values ({value})'
@@ -165,8 +165,11 @@ class AcLogin:
         query_data == post_data or self.update_sqlite(**post_data)
         return post_data
 
-    def main(self):
-        self.client_signin()
+    def delete_db(self):
+        self._conn.execute('delete from sqlite_sequence where name="user_data"')
+        self._conn.execute('delete from user_data where id=1')
+        self._conn.commit()
+        print('成功清除')
 
 
 def dict_factory(cursor, row):

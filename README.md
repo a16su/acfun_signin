@@ -17,12 +17,13 @@
 - `python run.py init -u your_username` 先初始化账号密码
     - `python run.py run --pc/--mobile` 开始签到
 - 或者直接 `python run.py run --pc/--mobile`在程序运行过程中根据提示输入账号密码
+- `python run.py clear` 清除数据库数据
 
 ## 更新计划
 - 支持添加多账号并同时签到
 - 支持查询香蕉数、动态、等级、好友等信息
 - 支持更新自己个人信息，如头像等(我在给自己挖大坑)
-- 加密数据库信息
+- ~~加密数据库信息~~
 
 ## 说明
 账号密码是明文存储在`data.db`中的，所以请不要泄露出去
